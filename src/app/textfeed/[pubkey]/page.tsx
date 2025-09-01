@@ -21,7 +21,6 @@ export default function PostDetailPage() {
 
   return <PostDetail account={new PublicKey(pubkey)} />
 }
-
  
 type AddCommentMutation = UseMutationResult<
   string,  
@@ -30,13 +29,10 @@ type AddCommentMutation = UseMutationResult<
   unknown          
 >
 
-type AddReactionMutation = UseMutationResult<
-  string,  
-  Error,              
-  { reaction_type: number }, 
-  unknown    
->
-
+type AddReactionMutation = {
+  mutateAsync: ({ reaction_type }: { reaction_type: number }) => Promise<void>;
+  isPending: boolean;
+};
 
 function PostDetail({ account }: { account: PublicKey }) {
   const provider = useAnchorProvider()
