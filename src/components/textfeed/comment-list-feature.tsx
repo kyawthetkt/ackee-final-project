@@ -29,7 +29,7 @@ export function CommentList({ post }: { post: PublicKey }) {
       <h2 className="text-lg font-semibold text-white">Comments</h2>
       {data.comments?.length ? (
         <ul className="space-y-2">
-          {data.comments?.map((c: any, idx: number) => (
+          {data.comments?.map((c: object, idx: number) => (
             <li
                 key={idx}
                 className="p-3 bg-white mt-3 rounded-md text-white shadow-sm space-y-1"
