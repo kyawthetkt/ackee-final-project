@@ -27,10 +27,9 @@ type AddCommentMutation = {
 };
 
 type AddReactionMutation = {
-  mutateAsync: ({ reaction_type }: { reaction_type: number }) => Promise<void>
+  mutateAsync: (vars: { reaction_type: number }) => Promise<string>
   isPending: boolean
 }
-
 
 function PostDetail({ account }: { account: PublicKey }) {
   const provider = useAnchorProvider()
