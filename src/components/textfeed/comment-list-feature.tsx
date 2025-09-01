@@ -4,6 +4,19 @@ import { PublicKey } from '@solana/web3.js'
 import { useQuery } from '@tanstack/react-query'
 import { useTextfeedProgram } from '@/components/textfeed/textfeed-data-access'
 import Link from 'next/link'
+import BN from 'bn.js'
+
+type Comment = {
+  author: PublicKey
+  text: string
+  timestamp: BN | number
+  likes?: BN | number
+  dislikes?: BN | number
+}
+
+type CommentAccount = {
+  comments: Comment[]
+}
 
 export function CommentList({ post }: { post: PublicKey }) {
   const { program } = useTextfeedProgram()
@@ -14,7 +27,7 @@ export function CommentList({ post }: { post: PublicKey }) {
     program.programId
   )
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<CommentAccount>({
     queryKey: ['comments', post.toBase58()],
     queryFn: () => program.account.commentAccount.fetch(commentPda),
   });
@@ -29,7 +42,7 @@ export function CommentList({ post }: { post: PublicKey }) {
       <h2 className="text-lg font-semibold text-white">Comments</h2>
       {data.comments?.length ? (
         <ul className="space-y-2">
-          {data.comments?.map((c: object, idx: number) => (
+          {data.comments?.map((c: Comment, idx: number) => (
             <li
                 key={idx}
                 className="p-3 bg-white mt-3 rounded-md text-white shadow-sm space-y-1"

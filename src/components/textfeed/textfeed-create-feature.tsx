@@ -27,9 +27,15 @@ export default function TextFeedCreateFeature() {
       await createPostMutation.mutateAsync({ title, description });
       setTitle("");
       setDescription("");
-    } catch (err: any) {
-      setError(err.message ?? "Failed to create post");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+          setError(err.message ?? "Failed to create post");
+      } else {
+        console.error('Unknown error', err)
+      }
     }
+}
+
   }
 
   return publicKey ? (
