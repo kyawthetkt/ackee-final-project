@@ -1,7 +1,7 @@
 'use client'
 
 import { useWallet } from '@solana/wallet-adapter-react'
-import { WalletButton } from '../solana/solana-provider'
+// import { WalletButton } from '../solana/solana-provider'
 // import { ExplorerLink } from '../cluster/cluster-ui'
 // import { useTextfeedProgram } from './textfeed-data-access'
 import { TextfeedList } from './textfeed-ui'

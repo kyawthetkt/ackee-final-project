@@ -19,9 +19,12 @@ export function useTextfeedProgram() {
   const programId = useMemo(() => getTextfeedProgramId(cluster.network as Cluster), [cluster])
   const program = useMemo(() => getTextfeedProgram(provider, programId), [provider, programId])
 
+  const isClient = typeof window !== 'undefined'
+  
   const accounts = useQuery({
     queryKey: ['textfeed', 'all', { cluster }],
     queryFn: () => program.account.post.all(),
+    enabled: isClient, 
   })
 
   const getProgramAccount = useQuery({

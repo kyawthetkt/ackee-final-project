@@ -1,13 +1,5 @@
-// src/app/textfeed/create/ClientOnlyCreate.tsx  (Client Component)
-'use client'
+import TextfeedCreate from '@/components/textfeed/textfeed-create-feature'
 
-import dynamic from 'next/dynamic'
-
-const TextfeedCreate = dynamic(
-  () => import('@/components/textfeed/textfeed-create-feature'),
-  { ssr: false }
-)
-
-export default function ClientOnlyCreate() {
+export default function Page() {
   return <TextfeedCreate />
 }
