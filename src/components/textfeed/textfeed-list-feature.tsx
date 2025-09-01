@@ -2,15 +2,15 @@
 
 import { useWallet } from '@solana/wallet-adapter-react'
 import { WalletButton } from '../solana/solana-provider'
-import { ExplorerLink } from '../cluster/cluster-ui'
-import { useTextfeedProgram } from './textfeed-data-access'
+// import { ExplorerLink } from '../cluster/cluster-ui'
+// import { useTextfeedProgram } from './textfeed-data-access'
 import { TextfeedList } from './textfeed-ui'
-import { AppHero } from '../app-hero'
-import { ellipsify } from '@/lib/utils'
+// import { AppHero } from '../app-hero'
+// import { ellipsify } from '@/lib/utils'
 
 export default function TextFeedListFeature() {
   const { publicKey } = useWallet()
-  const { programId } = useTextfeedProgram()
+  // const { programId } = useTextfeedProgram()
 
   return publicKey ? (
       <TextfeedList />

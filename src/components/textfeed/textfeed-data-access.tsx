@@ -2,13 +2,14 @@
 
 import { getTextfeedProgram, getTextfeedProgramId } from '@project/anchor'
 import { useConnection } from '@solana/wallet-adapter-react'
-import { Cluster, Keypair, PublicKey } from '@solana/web3.js'
+import { Cluster, PublicKey } from '@solana/web3.js'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useCluster } from '../cluster/cluster-data-access'
 import { useAnchorProvider } from '../solana/solana-provider'
 import { useTransactionToast } from '../use-transaction-toast'
-import { toast } from 'sonner'
+import { toast } from 'sonner';
+import { SystemProgram } from '@solana/web3.js'
 
 export function useTextfeedProgram() {
   const { connection } = useConnection()
@@ -39,8 +40,11 @@ export function useTextfeedProgram() {
 
       return program.methods.createPost(title, description).accounts({
         author: provider.wallet.publicKey,
-        post: postPda,
-      }).signers([]).rpc({ skipPreflight: true });
+        // post: postPda,
+        // systemProgram: SystemProgram.programId,
+      })
+      .signers([])
+      .rpc();
 
     },
     retry: false,
@@ -66,7 +70,7 @@ export function useTextfeedProgramAccount({ account }: { account: PublicKey }) {
   const { cluster } = useCluster()
   const transactionToast = useTransactionToast()
   const provider = useAnchorProvider()
-  const { program, accounts } = useTextfeedProgram()
+  const { program } = useTextfeedProgram()
   
   const accountQuery = useQuery({
     queryKey: ['post', 'fetch', { cluster, account }],
@@ -89,8 +93,9 @@ export function useTextfeedProgramAccount({ account }: { account: PublicKey }) {
         .addComment(text)
         .accounts({
           commenter: provider.wallet.publicKey,
-          post: account,
-          commentAccount: commentAccountPda
+          // post: account,
+          // commentAccount: commentAccountPda,
+          // systemProgram: SystemProgram.programId
         })
         .rpc();
     },
@@ -137,8 +142,9 @@ export function useTextfeedProgramAccount({ account }: { account: PublicKey }) {
         .addReaction(reaction_type)
         .accounts({
           reactor: provider.wallet.publicKey,
-          post: account,
-          reaction: reactionAccountPda,
+          // post: account,
+          // reaction: reactionAccountPda,
+          // systemProgram: SystemProgram.programId
         })
         .rpc();
     },
