@@ -12,19 +12,11 @@ import { CommentList } from '@/components/textfeed/comment-list-feature'
 
 import { UseMutationResult } from '@tanstack/react-query'
 
-export type AddReactionMutation = UseMutationResult<
-  string,
-  Error,
-  { reaction_type: number },
-  unknown
->
+type TxMutation<TVars> = UseMutationResult<string, Error, TVars, unknown>
 
-export type AddCommentMutation = UseMutationResult<
-  string,
-  Error,
-  { text: string },
-  unknown
->
+export type AddReactionMutation = TxMutation<{ reaction_type: number }>
+export type AddCommentMutation  = TxMutation<{ text: string }>
+
 
 export default function PostDetailPage() {
   const params = useParams()
