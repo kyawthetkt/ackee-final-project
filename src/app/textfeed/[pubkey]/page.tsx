@@ -21,6 +21,11 @@ export default function PostDetailPage() {
   return <PostDetail account={new PublicKey(pubkey)} />
 }
 
+type AddCommentMutation = {
+  mutateAsync: ({ text }: { text: string }) => Promise<void>;
+  isPending: boolean;
+};
+
 function PostDetail({ account }: { account: PublicKey }) {
   const provider = useAnchorProvider()
   const pubkey = provider.wallet?.publicKey
@@ -100,7 +105,7 @@ function ReactionButtons({
   )
 }
 
-function CommentForm({ addComment }: { addComment: any }) {
+function CommentForm({ addComment }: { addComment: AddCommentMutation }) {
   const [text, setText] = useState('')
 
   async function handleSubmit(e: React.FormEvent) {
