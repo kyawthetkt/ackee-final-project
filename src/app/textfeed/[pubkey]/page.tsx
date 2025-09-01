@@ -6,6 +6,7 @@ import { useTextfeedProgramAccount } from '@/components/textfeed/textfeed-data-a
 import { ExplorerLink } from '@/components/cluster/cluster-ui'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { UseMutationResult } from '@tanstack/react-query'
 
 import { useAnchorProvider } from '@/components/solana/solana-provider'
 import { CommentList } from '@/components/textfeed/comment-list-feature'
@@ -21,15 +22,21 @@ export default function PostDetailPage() {
   return <PostDetail account={new PublicKey(pubkey)} />
 }
 
-type AddCommentMutation = {
-  mutateAsync: ({ text }: { text: string }) => Promise<void>;
-  isPending: boolean;
-};
+ 
+type AddCommentMutation = UseMutationResult<
+  string,  
+  Error,               
+  { text: string }, 
+  unknown          
+>
 
-type AddReactionMutation = {
-  mutateAsync: (vars: { reaction_type: number }) => Promise<string>
-  isPending: boolean
-}
+type AddReactionMutation = UseMutationResult<
+  string,  
+  Error,              
+  { reaction_type: number }, 
+  unknown    
+>
+
 
 function PostDetail({ account }: { account: PublicKey }) {
   const provider = useAnchorProvider()
