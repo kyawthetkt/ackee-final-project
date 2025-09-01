@@ -13,10 +13,10 @@ import { CommentList } from '@/components/textfeed/comment-list-feature'
 import { UseMutationResult } from '@tanstack/react-query'
 
 export type AddReactionMutation = UseMutationResult<
-  string,                   // mutationFn return type (tx signature string)
-  Error,                    // error type
-  { reaction_type: number },// variables type
-  unknown                   // context type
+  string,
+  Error,
+  { reaction_type: number },
+  unknown
 >
 
 export type AddCommentMutation = UseMutationResult<
