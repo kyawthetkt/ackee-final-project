@@ -1,3 +1,5 @@
+'use client'
+
 import TextfeedCreate from '@/components/textfeed/textfeed-create-feature'
 
 export const dynamic = 'force-dynamic';

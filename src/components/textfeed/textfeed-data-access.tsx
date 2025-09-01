@@ -97,6 +97,7 @@ export function useTextfeedProgramAccount({ account }: { account: PublicKey }) {
           commentAccount: commentAccountPda,
           systemProgram: SystemProgram.programId
         })
+        .signers([])
         .rpc();
     },
     retry: false,
@@ -146,6 +147,7 @@ export function useTextfeedProgramAccount({ account }: { account: PublicKey }) {
           reaction: reactionAccountPda,
           systemProgram: SystemProgram.programId
         })
+        .signers([])
         .rpc();
     },
     retry: false,

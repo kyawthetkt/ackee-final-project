@@ -23,7 +23,7 @@ export default function PostDetailPage() {
 }
 
 function PostDetail({ account }: { account: PublicKey }) {
-  
+
   const provider = useAnchorProvider()
   const walletPubkey = provider.wallet?.publicKey ?? null
 
@@ -65,9 +65,9 @@ function PostDetail({ account }: { account: PublicKey }) {
         pubkey={walletPubkey}
         alreadyReacted={alreadyReacted}
       />
-
-      <CommentForm addComment={addCommentMutation} />
-
+      {walletPubkey && <CommentForm addComment={addCommentMutation} /> }
+      {!walletPubkey && <p>Connect wallet to comment</p> }
+      
       <CommentList post={account} />
     </div>
   )

@@ -12,6 +12,8 @@ export default function TextFeedListFeature() {
   const { publicKey } = useWallet()
   // const { programId } = useTextfeedProgram()
 
+  return <TextfeedList />
+
   return publicKey ? (
       <TextfeedList />
   ) : (
