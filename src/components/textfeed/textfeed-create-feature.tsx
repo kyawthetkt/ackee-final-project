@@ -34,8 +34,6 @@ export default function TextFeedCreateFeature() {
         console.error('Unknown error', err)
       }
     }
-}
-
   }
 
   return publicKey ? (
