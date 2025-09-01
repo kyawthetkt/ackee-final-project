@@ -6,10 +6,17 @@ import { useTextfeedProgramAccount } from '@/components/textfeed/textfeed-data-a
 import { ExplorerLink } from '@/components/cluster/cluster-ui'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { UseMutationResult } from '@tanstack/react-query'
 
 import { useAnchorProvider } from '@/components/solana/solana-provider'
 import { CommentList } from '@/components/textfeed/comment-list-feature'
+
+import { UseMutationResult } from '@tanstack/react-query'
+
+type TxMutation<TVars> = UseMutationResult<string, Error, TVars, unknown>
+
+export type AddCommentMutation = TxMutation<{ text: string }>
+export type AddReactionMutation = TxMutation<{ reaction_type: number }>
+
 
 export default function PostDetailPage() {
   const params = useParams()
@@ -21,18 +28,6 @@ export default function PostDetailPage() {
 
   return <PostDetail account={new PublicKey(pubkey)} />
 }
- 
-type AddCommentMutation = UseMutationResult<
-  string,  
-  Error,               
-  { text: string }, 
-  unknown          
->
-
-type AddReactionMutation = {
-  mutateAsync: ({ reaction_type }: { reaction_type: number }) => Promise<void>;
-  isPending: boolean;
-};
 
 function PostDetail({ account }: { account: PublicKey }) {
   const provider = useAnchorProvider()
@@ -90,21 +85,19 @@ function ReactionButtons({
   alreadyReacted,
 }: {
   addReaction: AddReactionMutation
-  pubkey: PublicKey
+  pubkey: PublicKey | null
   alreadyReacted: boolean
 }) {
   return (
     <div className="flex gap-4 mt-4">
       <Button
         disabled={!pubkey || addReaction.isPending || alreadyReacted}
-        className="bg-green-600 hover:bg-green-700 text-white"
         onClick={() => addReaction.mutateAsync({ reaction_type: 1 })}
       >
         👍 Like
       </Button>
       <Button
         disabled={!pubkey || addReaction.isPending || alreadyReacted}
-        className="bg-red-600 hover:bg-red-700 text-white"
         onClick={() => addReaction.mutateAsync({ reaction_type: 0 })}
       >
         👎 Dislike
@@ -129,15 +122,11 @@ function CommentForm({ addComment }: { addComment: AddCommentMutation }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Write a comment..."
-        className="w-full px-4 py-2 bg-gray-100 border border-gray-120 rounded-md text-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-100 focus:border-gray-100"
+        className="w-full px-4 py-2 bg-gray-100 border border-gray-120 rounded-md text-gray-500"
         rows={3}
       />
 
-      <Button
-        type="submit"
-        disabled={addComment.isPending}
-        className="bg-purple-600 hover:bg-purple-700 text-white"
-      >
+      <Button type="submit" disabled={addComment.isPending}>
         {addComment.isPending ? 'Submitting…' : 'Add Comment'}
       </Button>
     </form>
