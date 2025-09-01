@@ -1,15 +1,13 @@
-// src/app/textfeed/create/page.tsx
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
-export const fetchCache = 'force-no-store'
+// src/app/textfeed/create/ClientOnlyCreate.tsx  (Client Component)
+'use client'
 
 import dynamic from 'next/dynamic'
 
 const TextfeedCreate = dynamic(
   () => import('@/components/textfeed/textfeed-create-feature'),
-  { ssr: false } // ⬅️ critical
+  { ssr: false }
 )
 
-export default function Page() {
+export default function ClientOnlyCreate() {
   return <TextfeedCreate />
 }
