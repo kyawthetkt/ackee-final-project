@@ -6,17 +6,10 @@ import { useTextfeedProgramAccount } from '@/components/textfeed/textfeed-data-a
 import { ExplorerLink } from '@/components/cluster/cluster-ui'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-
 import { useAnchorProvider } from '@/components/solana/solana-provider'
 import { CommentList } from '@/components/textfeed/comment-list-feature'
 
-import { UseMutationResult } from '@tanstack/react-query'
-
-type TxMutation<TVars> = UseMutationResult<string, Error, TVars, unknown>
-
-export type AddReactionMutation = TxMutation<{ reaction_type: number }>
-export type AddCommentMutation  = TxMutation<{ text: string }>
-
+type TextfeedReturn = ReturnType<typeof useTextfeedProgramAccount>
 
 export default function PostDetailPage() {
   const params = useParams()
@@ -31,7 +24,7 @@ export default function PostDetailPage() {
 
 function PostDetail({ account }: { account: PublicKey }) {
   const provider = useAnchorProvider()
-  const pubkey = provider.wallet?.publicKey
+  const walletPubkey = provider.wallet?.publicKey ?? null
 
   const { accountQuery, addCommentMutation, addReactionMutation, userReactionQuery } =
     useTextfeedProgramAccount({ account })
@@ -68,7 +61,7 @@ function PostDetail({ account }: { account: PublicKey }) {
 
       <ReactionButtons
         addReaction={addReactionMutation}
-        pubkey={pubkey}
+        pubkey={walletPubkey}
         alreadyReacted={alreadyReacted}
       />
 
@@ -84,7 +77,7 @@ function ReactionButtons({
   pubkey,
   alreadyReacted,
 }: {
-  addReaction: AddReactionMutation
+  addReaction: TextfeedReturn['addReactionMutation']   // ✅ inferred exact type
   pubkey: PublicKey | null
   alreadyReacted: boolean
 }) {
@@ -92,12 +85,14 @@ function ReactionButtons({
     <div className="flex gap-4 mt-4">
       <Button
         disabled={!pubkey || addReaction.isPending || alreadyReacted}
+        className="bg-green-600 hover:bg-green-700 text-white"
         onClick={() => addReaction.mutateAsync({ reaction_type: 1 })}
       >
         👍 Like
       </Button>
       <Button
         disabled={!pubkey || addReaction.isPending || alreadyReacted}
+        className="bg-red-600 hover:bg-red-700 text-white"
         onClick={() => addReaction.mutateAsync({ reaction_type: 0 })}
       >
         👎 Dislike
@@ -106,7 +101,11 @@ function ReactionButtons({
   )
 }
 
-function CommentForm({ addComment }: { addComment: AddCommentMutation }) {
+function CommentForm({
+  addComment,
+}: {
+  addComment: TextfeedReturn['addCommentMutation'] 
+}) {
   const [text, setText] = useState('')
 
   async function handleSubmit(e: React.FormEvent) {
@@ -126,7 +125,7 @@ function CommentForm({ addComment }: { addComment: AddCommentMutation }) {
         rows={3}
       />
 
-      <Button type="submit" disabled={addComment.isPending}>
+      <Button type="submit" disabled={addComment.isPending} className="bg-purple-600 hover:bg-purple-700 text-white">
         {addComment.isPending ? 'Submitting…' : 'Add Comment'}
       </Button>
     </form>
