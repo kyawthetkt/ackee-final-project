@@ -14,15 +14,15 @@ export default function TextFeedListFeature() {
 
   return <TextfeedList />
 
-  return publicKey ? (
-      <TextfeedList />
-  ) : (
-    <div className="max-w-4xl mx-auto">
-      <div className="hero py-[64px]">
-        <div className="hero-content text-center">
-          <WalletButton />
-        </div>
-      </div>
-    </div>
-  )
+  // return publicKey ? (
+  //     <TextfeedList />
+  // ) : (
+  //   <div className="max-w-4xl mx-auto">
+  //     <div className="hero py-[64px]">
+  //       <div className="hero-content text-center">
+  //         <WalletButton />
+  //       </div>
+  //     </div>
+  //   </div>
+  // )
 }
