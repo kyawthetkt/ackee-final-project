@@ -23,6 +23,7 @@ export default function PostDetailPage() {
 }
 
 function PostDetail({ account }: { account: PublicKey }) {
+  
   const provider = useAnchorProvider()
   const walletPubkey = provider.wallet?.publicKey ?? null
 

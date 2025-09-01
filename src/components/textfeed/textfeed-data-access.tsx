@@ -38,10 +38,10 @@ export function useTextfeedProgram() {
         program.programId
       );
 
-      return program.methods.createPost(title, description).accounts({
+      return program.methods.createPost(title, description).accountsStrict({
         author: provider.wallet.publicKey,
-        // post: postPda,
-        // systemProgram: SystemProgram.programId,
+        post: postPda,
+        systemProgram: SystemProgram.programId,
       })
       .signers([])
       .rpc();
@@ -91,11 +91,11 @@ export function useTextfeedProgramAccount({ account }: { account: PublicKey }) {
 
       return program.methods
         .addComment(text)
-        .accounts({
+        .accountsStrict({
           commenter: provider.wallet.publicKey,
-          // post: account,
-          // commentAccount: commentAccountPda,
-          // systemProgram: SystemProgram.programId
+          post: account,
+          commentAccount: commentAccountPda,
+          systemProgram: SystemProgram.programId
         })
         .rpc();
     },
@@ -140,11 +140,11 @@ export function useTextfeedProgramAccount({ account }: { account: PublicKey }) {
 
       return program.methods
         .addReaction(reaction_type)
-        .accounts({
+        .accountsStrict({
           reactor: provider.wallet.publicKey,
-          // post: account,
-          // reaction: reactionAccountPda,
-          // systemProgram: SystemProgram.programId
+          post: account,
+          reaction: reactionAccountPda,
+          systemProgram: SystemProgram.programId
         })
         .rpc();
     },
