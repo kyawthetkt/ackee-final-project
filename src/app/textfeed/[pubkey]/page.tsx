@@ -26,6 +26,12 @@ type AddCommentMutation = {
   isPending: boolean;
 };
 
+type AddReactionMutation = {
+  mutateAsync: ({ reaction_type }: { reaction_type: number }) => Promise<void>
+  isPending: boolean
+}
+
+
 function PostDetail({ account }: { account: PublicKey }) {
   const provider = useAnchorProvider()
   const pubkey = provider.wallet?.publicKey
@@ -81,7 +87,7 @@ function ReactionButtons({
   pubkey,
   alreadyReacted,
 }: {
-  addReaction: any
+  addReaction: AddReactionMutation
   pubkey: PublicKey
   alreadyReacted: boolean
 }) {
