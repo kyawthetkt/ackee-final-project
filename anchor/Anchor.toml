@@ -5,15 +5,18 @@ package_manager = "yarn"
 resolution = true
 skip-lint = false
 
+[programs.devnet]
+textfeed = "Fov2FcuzX37TPe8fRq94UcWgaBW37NEpp4FK2MRY3hri"
+
 [programs.localnet]
-counter = "FqzkXZdwYjurnUKetJCAvaUw5WAqbwzU6gZEwydeEfqS"
+textfeed = "Fov2FcuzX37TPe8fRq94UcWgaBW37NEpp4FK2MRY3hri"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "localnet"
-wallet = "~/.config/solana/id.json"
+cluster = "devnet"
+wallet = "~/.config/solana/my_new_wallet.json"
 
 [scripts]
 test = "../node_modules/.bin/jest --preset ts-jest"

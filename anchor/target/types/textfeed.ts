@@ -1,0 +1,413 @@
+/**
+ * Program IDL in camelCase format in order to be used in JS/TS.
+ *
+ * Note that this is only a type helper and is not the actual IDL. The original
+ * IDL can be found at `target/idl/textfeed.json`.
+ */
+export type Textfeed = {
+  "address": "Fov2FcuzX37TPe8fRq94UcWgaBW37NEpp4FK2MRY3hri",
+  "metadata": {
+    "name": "textfeed",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "addComment",
+      "discriminator": [
+        59,
+        175,
+        193,
+        236,
+        134,
+        214,
+        75,
+        141
+      ],
+      "accounts": [
+        {
+          "name": "commentAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  109,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "post"
+              }
+            ]
+          }
+        },
+        {
+          "name": "post",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "post.author",
+                "account": "post"
+              },
+              {
+                "kind": "account",
+                "path": "post.title",
+                "account": "post"
+              }
+            ]
+          }
+        },
+        {
+          "name": "commenter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "text",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "addReaction",
+      "discriminator": [
+        45,
+        66,
+        146,
+        247,
+        148,
+        128,
+        210,
+        196
+      ],
+      "accounts": [
+        {
+          "name": "reaction",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  97,
+                  99,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "post"
+              },
+              {
+                "kind": "account",
+                "path": "reactor"
+              }
+            ]
+          }
+        },
+        {
+          "name": "post",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "post.author",
+                "account": "post"
+              },
+              {
+                "kind": "account",
+                "path": "post.title",
+                "account": "post"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reactor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "reactionType",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "createPost",
+      "discriminator": [
+        123,
+        92,
+        184,
+        29,
+        231,
+        24,
+        15,
+        202
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "post",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author"
+              },
+              {
+                "kind": "arg",
+                "path": "title"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "commentAccount",
+      "discriminator": [
+        42,
+        146,
+        173,
+        246,
+        2,
+        22,
+        223,
+        91
+      ]
+    },
+    {
+      "name": "post",
+      "discriminator": [
+        8,
+        147,
+        90,
+        186,
+        185,
+        56,
+        192,
+        150
+      ]
+    },
+    {
+      "name": "reaction",
+      "discriminator": [
+        226,
+        61,
+        100,
+        191,
+        223,
+        221,
+        142,
+        139
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "invalidReactionType",
+      "msg": "Reaction is invalid."
+    }
+  ],
+  "types": [
+    {
+      "name": "comment",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "author",
+            "type": "pubkey"
+          },
+          {
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "likes",
+            "type": "u64"
+          },
+          {
+            "name": "dislikes",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "commentAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "post",
+            "type": "pubkey"
+          },
+          {
+            "name": "comments",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "comment"
+                }
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "post",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "author",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "likes",
+            "type": "u64"
+          },
+          {
+            "name": "dislikes",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reaction",
+      "docs": [
+        "//////////////////////////////////////"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "post",
+            "type": "pubkey"
+          },
+          {
+            "name": "reactor",
+            "type": "pubkey"
+          },
+          {
+            "name": "reactionType",
+            "type": "u8"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+};

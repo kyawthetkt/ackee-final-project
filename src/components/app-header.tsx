@@ -17,18 +17,21 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
   }
 
   return (
-    <header className="relative z-50 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400">
+    <header className="relative z-50 px-4 py-2 bg-secondary text-foreground mb-4">
       <div className="mx-auto flex justify-between items-center">
+        {/* Logo + Links */}
         <div className="flex items-baseline gap-4">
-          <Link className="text-xl hover:text-neutral-500 dark:hover:text-white" href="/">
-            <span>Textfeed</span>
+          <Link className="text-xl hover:text-accent-foreground" href="/">
+            <span className='text-bold'>Text Feed</span>
           </Link>
           <div className="hidden md:flex items-center">
             <ul className="flex gap-4 flex-nowrap items-center">
               {links.map(({ label, path }) => (
                 <li key={path}>
                   <Link
-                    className={`hover:text-neutral-500 dark:hover:text-white ${isActive(path) ? 'text-neutral-500 dark:text-white' : ''}`}
+                    className={`hover:text-accent-foreground transition-colors ${
+                      isActive(path) ? 'text-accent-foreground font-semibold' : ''
+                    }`}
                     href={path}
                   >
                     {label}
@@ -39,24 +42,34 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
           </div>
         </div>
 
-        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setShowMenu(!showMenu)}>
+        {/* Mobile menu button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={() => setShowMenu(!showMenu)}
+        >
           {showMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </Button>
 
+        {/* Desktop Right-side Controls */}
         <div className="hidden md:flex items-center gap-4">
           <WalletButton />
           <ClusterUiSelect />
-          <ThemeSelect />
+          {/* <ThemeSelect /> */}
         </div>
 
+        {/* Mobile Menu */}
         {showMenu && (
-          <div className="md:hidden fixed inset-x-0 top-[52px] bottom-0 bg-neutral-100/95 dark:bg-neutral-900/95 backdrop-blur-sm">
-            <div className="flex flex-col p-4 gap-4 border-t dark:border-neutral-800">
+          <div className="md:hidden fixed inset-x-0 top-[52px] bottom-0 bg-background/95 backdrop-blur-sm border-t border-border">
+            <div className="flex flex-col p-4 gap-4">
               <ul className="flex flex-col gap-4">
                 {links.map(({ label, path }) => (
                   <li key={path}>
                     <Link
-                      className={`hover:text-neutral-500 dark:hover:text-white block text-lg py-2  ${isActive(path) ? 'text-neutral-500 dark:text-white' : ''} `}
+                      className={`block text-lg py-2 hover:text-accent-foreground transition-colors ${
+                        isActive(path) ? 'text-accent-foreground font-semibold' : ''
+                      }`}
                       href={path}
                       onClick={() => setShowMenu(false)}
                     >
@@ -68,7 +81,7 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
               <div className="flex flex-col gap-4">
                 <WalletButton />
                 <ClusterUiSelect />
-                <ThemeSelect />
+                {/* <ThemeSelect /> */}
               </div>
             </div>
           </div>
