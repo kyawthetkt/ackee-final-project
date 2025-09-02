@@ -7,7 +7,7 @@ import { ExplorerLink } from '@/components/cluster/cluster-ui'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useAnchorProvider } from '@/components/solana/solana-provider'
-import { CommentList } from '@/components/textfeed/comment-list-feature'
+import { CommentList } from './textfeed-comment-list-feature'
 
 type TextfeedReturn = ReturnType<typeof useTextfeedProgramAccount>
 
