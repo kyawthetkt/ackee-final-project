@@ -82,7 +82,7 @@ describe('Text Feed', () => {
     await airdrop(program.provider.connection, reactor4.publicKey, 5 * LAMPORTS_PER_SOL)
   })
 
-  it('Create Post', async () => {
+  it('Managed to create a post', async () => {
       const title = "Testing in Solana";
       const description = "Description in Solana";
 
@@ -117,7 +117,7 @@ describe('Text Feed', () => {
 
   describe('Comment', () => {
         
-    it('Comment a post', async () => {
+    it('Managed to comment on a post', async () => {
 
           const title = "comment on a post";
           const description = "comment description on a post";
@@ -159,7 +159,7 @@ describe('Text Feed', () => {
 
   describe('Reaction', () => {
         
-    it('react to a post', async () => {
+    it('Managed to react to a post', async () => {
 
         const title = "reaction on a post";
         const description = "reaction on a post";
@@ -211,7 +211,7 @@ describe('Text Feed', () => {
           expect(post.dislikes.eq(new BN(1))).toBeTruthy();
     });
 
-    it('invalid react to a post', async () => {
+    it('Invalid reaction to a post', async () => {
 
         try {
           const title = "failed reaction on a post";
