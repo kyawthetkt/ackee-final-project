@@ -1,11 +1,13 @@
-import dynamic from 'next/dynamic'
+'use client';
 
-// Ensure Node runtime (avoid Edge + SES weirdness with web3)
-export const runtime = 'nodejs'
+// import dynamic from 'next/dynamic';
 
-// Load the client component purely on the client
-const ClientPostDetail = dynamic(() => import('@/components/textfeed/textfeed-post-detail'), { ssr: false })
+// const TextfeedCreate = dynamic(
+//   () => import('@/components/textfeed/textfeed-create-feature'),
+//   { ssr: false }
+// );
+import PostDetailPage from "@/components/textfeed/textfeed-post-detail";
 
 export default function Page() {
-  return <ClientPostDetail />
+  return <PostDetailPage />
 }
