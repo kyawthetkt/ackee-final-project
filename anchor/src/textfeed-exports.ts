@@ -21,7 +21,7 @@ export function getTextfeedProgramId(cluster: Cluster) {
     case 'devnet':
     case 'testnet':
       // This is the program ID for the Counter program on devnet and testnet.
-      return new PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID!)
+      return new PublicKey("Fov2FcuzX37TPe8fRq94UcWgaBW37NEpp4FK2MRY3hri")
     case 'mainnet-beta':
     default:
       return TEXTFEED_PROGRAM_ID
