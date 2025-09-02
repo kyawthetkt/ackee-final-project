@@ -25,7 +25,7 @@ export default function PostDetailPage() {
 function PostDetail({ account }: { account: PublicKey }) {
 
   const provider = useAnchorProvider()
-  const walletPubkey = provider.wallet?.publicKey ?? null
+  const walletPubkey = provider?.wallet?.publicKey ?? null
 
   const { accountQuery, addCommentMutation, addReactionMutation, userReactionQuery } =
     useTextfeedProgramAccount({ account })
@@ -78,7 +78,7 @@ function ReactionButtons({
   pubkey,
   alreadyReacted,
 }: {
-  addReaction: TextfeedReturn['addReactionMutation']   // ✅ inferred exact type
+  addReaction: TextfeedReturn['addReactionMutation']
   pubkey: PublicKey | null
   alreadyReacted: boolean
 }) {
