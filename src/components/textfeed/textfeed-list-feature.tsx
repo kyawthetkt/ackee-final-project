@@ -9,7 +9,7 @@ import { TextfeedList } from './textfeed-ui'
 // import { ellipsify } from '@/lib/utils'
 
 export default function TextFeedListFeature() {
-  const { publicKey } = useWallet()
+  // const { publicKey } = useWallet()
   // const { programId } = useTextfeedProgram()
 
   return <TextfeedList />
