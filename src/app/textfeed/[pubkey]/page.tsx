@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { PublicKey } from '@solana/web3.js'
 import { useTextfeedProgramAccount } from '@/components/textfeed/textfeed-data-access'
@@ -12,14 +13,32 @@ import { CommentList } from '@/components/textfeed/comment-list-feature'
 type TextfeedReturn = ReturnType<typeof useTextfeedProgramAccount>
 
 export default function PostDetailPage() {
-  const params = useParams()
-  const pubkey = params?.pubkey as string
 
-  if (!pubkey) {
+  const params = useParams<{ pubkey?: string | string[] }>()
+  // normalize [pubkey] to a string
+  const pubkeyStr = useMemo(() => {
+    const v = params?.pubkey
+    return Array.isArray(v) ? v[0] : v
+  }, [params])
+
+  // safely construct the PublicKey (or null)
+  const accountPk = useMemo(() => {
+    try {
+      return pubkeyStr ? new PublicKey(pubkeyStr) : null
+    } catch {
+      return null
+    }
+  }, [pubkeyStr])
+
+  if (!pubkeyStr) {
     return <div className="p-6 text-center text-gray-300">No post selected.</div>
   }
 
-  return <PostDetail account={new PublicKey(pubkey)} />
+  if (!accountPk) {
+    return <div className="p-6 text-center text-red-400">Invalid post id.</div>
+  }
+
+  return <PostDetail account={new PublicKey(accountPk)} />
 }
 
 function PostDetail({ account }: { account: PublicKey }) {
